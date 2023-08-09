@@ -15,7 +15,6 @@ namespace MedisoftDemo.Models
         public string City { get; set; }
         public string District { get; set; }
         public string Neighhbour { get; set; }
-        public string Street { get; set; }
         public string PatientName { get; set; }
         public string PatientLastName { get; set; }
         public string Gender { get; set; }
@@ -33,8 +32,8 @@ namespace MedisoftDemo.Models
             return this.MemberwiseClone();
         }
         public static List<Case> cases = new List<Case>(){
-        new Case{Id=Guid.NewGuid(),time=DateTime.Now,CaseType="Trafik Kazası",City="Adana",District="Seyhan",Neighhbour="19.yüzyıl Mahallesi",Street="6805.sokak",Address="Melih Şah okulun sol çaprazı",ComplaintDefinition="bacak gopması",FirstAid="bacak dikiş",PatientInformation="bilinci açık",PatientName="Ali",PatientLastName="Gök",PhoneNumber="+9055555555",SelectedAmbulance="Guid.NewGuid()",SelectedTechnician=Guid.NewGuid(),PatientNumber=2},
-         new Case{Id=Guid.NewGuid(),time=DateTime.Now,CaseType="Trafik Kazası",City="Adana",District="Seyhan",Neighhbour="19.yüzyıl Mahallesi",Street="6805.sokak",Address="Melih Şah okulun sol çaprazı",ComplaintDefinition="bacak gopması",FirstAid="bacak dikiş",PatientInformation="bilinci açık",PatientName="Gökhan",PatientLastName="Gök",PhoneNumber="+9055555555",SelectedAmbulance="Guid.NewGuid()",SelectedTechnician=Guid.NewGuid(),PatientNumber=12},
+        new Case{Id=Guid.NewGuid(),time=DateTime.Now,CaseType="Trafik Kazası",City="Adana",District="Seyhan",Neighhbour="19.yüzyıl Mahallesi",Address="Melih Şah okulun sol çaprazı",ComplaintDefinition="bacak gopması",FirstAid="bacak dikiş",PatientInformation="bilinci açık",PatientName="Ali",PatientLastName="Gök",PhoneNumber="+9055555555",SelectedAmbulance="Guid.NewGuid()",SelectedTechnician=Guid.NewGuid(),PatientNumber=2},
+         new Case{Id=Guid.NewGuid(),time=DateTime.Now,CaseType="Trafik Kazası",City="Adana",District="Seyhan",Neighhbour="19.yüzyıl Mahallesi",Address="Melih Şah okulun sol çaprazı",ComplaintDefinition="bacak gopması",FirstAid="bacak dikiş",PatientInformation="bilinci açık",PatientName="Gökhan",PatientLastName="Gök",PhoneNumber="+9055555555",SelectedAmbulance="Guid.NewGuid()",SelectedTechnician=Guid.NewGuid(),PatientNumber=12},
         };
     }
 }
