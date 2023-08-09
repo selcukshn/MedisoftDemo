@@ -7,12 +7,13 @@
          <MudTextField Disabled T="String" Label="Sokak" Value="_case.Street" />
          <MudTextField Disabled T="String" Label="Vaka Bildirimi Yapan Ad" Value="_case.PatientName" />
          <MudTextField Disabled T="String" Label="Vaka Bildirimi Yapan Soyad" Value="_case.PatientLastName" />
+         <MudTextField T="int" Label="Hasta Sayısı" @bind-Value="_case.PatientNumber" @bind-Value:event="SetIndex" />
 
-         <MudTabs KeepPanelsAlive="true" Elevation="2" Rounded="true" ApplyEffectsToContainer="true" PanelClass="pa-6"
-             Class="mt-5">
-             @for (int i = 1; i <= _case.PatientNumber; i++)
+         <MudTabs @ref="tabs" KeepPanelsAlive="true" Elevation="2" Rounded="true" ApplyEffectsToContainer="true"
+             PanelClass="pa-6" Class="mt-5">
+             @for (int i = 0; i < _case.PatientNumber; i++)
             {
-                <MudTabPanel Text="@($"Hasta {(i).ToString()}")">
+                <MudTabPanel Text="@($"Hasta {(i+1).ToString()}")">
                     <PatientInformation />
                 </MudTabPanel>
             }
@@ -28,6 +29,7 @@
 @code {
     [CascadingParameter] MudDialogInstance MudDialog { get; set; }
     [Parameter] public Case _case { get; set; }
+    MudTabs tabs;
 
     void Submit() => MudDialog.Close(DialogResult.Ok(true));
     void Cancel() => MudDialog.Cancel();

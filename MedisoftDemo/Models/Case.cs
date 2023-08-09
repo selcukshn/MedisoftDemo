@@ -10,7 +10,20 @@ namespace MedisoftDemo.Models
         public Guid Id { get; set; }
         public DateTime time { get; set; }
         public string CaseType { get; set; }
-        public int PatientNumber { get; set; }
+        private int _patientNumber = 1;
+        public int PatientNumber
+        {
+            get => _patientNumber;
+            set
+            {
+                if (value <= 0)
+                    _patientNumber = 1;
+                else if (value > 100)
+                    _patientNumber = 100;
+                else
+                    _patientNumber = value;
+            }
+        }
         public string RiskSituation { get; set; }
         public string City { get; set; }
         public string District { get; set; }
@@ -33,8 +46,8 @@ namespace MedisoftDemo.Models
             return this.MemberwiseClone();
         }
         public static List<Case> cases = new List<Case>(){
-        new Case{Id=Guid.NewGuid(),time=DateTime.Now,CaseType="Trafik Kazası",City="Adana",District="Seyhan",Neighhbour="19.yüzyıl Mahallesi",Street="6805.sokak",Address="Melih Şah okulun sol çaprazı",ComplaintDefinition="bacak gopması",FirstAid="bacak dikiş",PatientInformation="bilinci açık",PatientName="Ali",PatientLastName="Gök",PhoneNumber="+9055555555",SelectedAmbulance="Guid.NewGuid()",SelectedTechnician=Guid.NewGuid(),PatientNumber=2},
-         new Case{Id=Guid.NewGuid(),time=DateTime.Now,CaseType="Trafik Kazası",City="Adana",District="Seyhan",Neighhbour="19.yüzyıl Mahallesi",Street="6805.sokak",Address="Melih Şah okulun sol çaprazı",ComplaintDefinition="bacak gopması",FirstAid="bacak dikiş",PatientInformation="bilinci açık",PatientName="Gökhan",PatientLastName="Gök",PhoneNumber="+9055555555",SelectedAmbulance="Guid.NewGuid()",SelectedTechnician=Guid.NewGuid(),PatientNumber=12},
+        new Case{Id=Guid.NewGuid(),time=DateTime.Now,CaseType="Trafik Kazası",City="Adana",District="Seyhan",Neighhbour="19.yüzyıl Mahallesi",Street="6805.sokak",Address="Melih Şah okulun sol çaprazı",ComplaintDefinition="bacak gopması",FirstAid="bacak dikiş",PatientInformation="bilinci açık",PatientName="Ali",PatientLastName="Gök",PhoneNumber="+9055555555",SelectedAmbulance="Guid.NewGuid()",SelectedTechnician=Guid.NewGuid()},
+         new Case{Id=Guid.NewGuid(),time=DateTime.Now,CaseType="Trafik Kazası",City="Adana",District="Seyhan",Neighhbour="19.yüzyıl Mahallesi",Street="6805.sokak",Address="Melih Şah okulun sol çaprazı",ComplaintDefinition="bacak gopması",FirstAid="bacak dikiş",PatientInformation="bilinci açık",PatientName="Gökhan",PatientLastName="Gök",PhoneNumber="+9055555555",SelectedAmbulance="Guid.NewGuid()",SelectedTechnician=Guid.NewGuid()},
         };
     }
 }
