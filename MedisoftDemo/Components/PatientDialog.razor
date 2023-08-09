@@ -6,7 +6,7 @@
          <MudTextField Disabled T="String" Label="Mahalle" Value="_case.Neighhbour" />
          <MudTextField Disabled T="String" Label="Vaka Bildirimi Yapan Ad" Value="_case.PatientName" />
          <MudTextField Disabled T="String" Label="Vaka Bildirimi Yapan Soyad" Value="_case.PatientLastName" />
-         <MudTextField T="int" Label="Hasta Sayısı" @bind-Value="_case.PatientNumber" @bind-Value:event="SetIndex" />
+         <MudTextField T="int" Label="Hasta Sayısı" @bind-Value="_case.PatientNumber" TextChanged="SetIndex" />
 
          <MudTabs @ref="tabs" KeepPanelsAlive="true" Elevation="2" Rounded="true" ApplyEffectsToContainer="true"
              PanelClass="pa-6" Class="mt-5">
@@ -32,4 +32,12 @@
 
     void Submit() => MudDialog.Close(DialogResult.Ok(true));
     void Cancel() => MudDialog.Cancel();
+    void SetIndex()
+    {
+        if (tabs is not null)
+        {
+            if (_case.PatientNumber < tabs.Panels.Count)
+                tabs.ActivatePanel(_case.PatientNumber);
+        }
+    }
 }
