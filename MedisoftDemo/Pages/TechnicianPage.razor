@@ -15,11 +15,6 @@
                 <PropertyColumn Hidden IsEditable="false" Property="x => x.PatientName" Title="Ad" />
                  <PropertyColumn Hidden IsEditable="false" Property="x => x.PatientLastName" Title="Soyad" />
                  <PropertyColumn Hidden Property="x => x.Gender" Title="Cinsiyet" />
-                 <PropertyColumn Hidden Property="x => x.RiskSituation" Title="Risk Durumu">
-                     <EditTemplate>
-                         <MudAutocomplete T="string" Variant="Variant.Filled" Label="Risk Durumu" SearchFunc="@Search" />
-                     </EditTemplate>
-                 </PropertyColumn>
                  <PropertyColumn Hidden Property="x => x.PatientInformation" Title="Hasta Bilgisi">
                      <EditTemplate>
                          <MudTextField Label="Hasta Durum Bilgisi" Variant="Variant.Outlined"
@@ -49,7 +44,7 @@
 
     [Inject] public IDialogService DialogService { get; set; }
 
-    public List<string> caseinfs = new() { "vaka1", "vaka2", "vaka3" };
+    public List<string> caseinfs = new() { "Risk Yok", "Az Riskli", "Orta Riskli", "Yüksek Riskli" };
 
     private async Task<IEnumerable<string>> Search(string value)
     {

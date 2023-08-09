@@ -49,4 +49,4 @@ namespace MedisoftDemo.Models
          new Case{Id=Guid.NewGuid(),time=DateTime.Now,CaseType="Trafik Kazası",City="Adana",District="Seyhan",Neighhbour="19.yüzyıl Mahallesi",Address="Melih Şah okulun sol çaprazı",ComplaintDefinition="bacak gopması",FirstAid="bacak dikiş",PatientInformation="bilinci açık",PatientName="Gökhan",PatientLastName="Gök",PhoneNumber="+9055555555",SelectedAmbulance="Guid.NewGuid()",SelectedTechnician=Guid.NewGuid()},
         };
     }
-}   
+}
