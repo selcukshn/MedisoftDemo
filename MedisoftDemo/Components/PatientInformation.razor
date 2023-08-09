@@ -1,22 +1,25 @@
-<MudFileUpload T="IReadOnlyList<IBrowserFile>" FilesChanged="UploadFiles">
+<MudFileUpload T="IReadOnlyList<IBrowserFile>" AppendMultipleFiles="false">
     <ButtonTemplate>
         <MudButton HtmlTag="label" Variant="Variant.Filled" Color="Color.Primary"
             StartIcon="@Icons.Material.Filled.CloudUpload" for="@context">
-            Media Yükle
+            Medya Yükle
         </MudButton>
     </ButtonTemplate>
-</MudFileUpload>
-@if (files != null)
-{
-    <MudList>
-        @foreach (var file in files)
+    <SelectedTemplate>
+        @if (context != null)
         {
-            <MudListItem Icon="@Icons.Material.Filled.AttachFile">
-                @file.Name <code>@file.Size bytes</code>
-            </MudListItem>
+            <MudList>
+                @foreach (var file in context)
+                {
+                    <MudListItem Icon="@Icons.Material.Filled.AttachFile">
+                        @file.Name <code>@file.Size bytes</code>
+                    </MudListItem>
+                }
+            </MudList>
         }
-    </MudList>
-}
+    </SelectedTemplate>
+</MudFileUpload>
+
 <MudTextField T="String" Label="Ad" />
 <MudTextField T="String" Label="Soyad" />
 <MudSelect T="String" Label="Cinsiyet" Variant="Variant.Outlined" AnchorOrigin="Origin.BottomCenter">
@@ -31,16 +34,6 @@
 
 
 @code {
-
-    IList<IBrowserFile> files = new List<IBrowserFile>();
-    private void UploadFiles(IReadOnlyList<IBrowserFile> files)
-    {
-        foreach (var file in files)
-        {
-            this.files.Add(file);
-        }
-    }
-
 
 
 }
