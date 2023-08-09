@@ -1,20 +1,23 @@
-<MudFileUpload T="IReadOnlyList<IBrowserFile>" FilesChanged="UploadFiles">
+<MudFileUpload T="IReadOnlyList<IBrowserFile>" AppendMultipleFiles="false">
     <ButtonTemplate>
         <MudButton HtmlTag="label" Variant="Variant.Filled" Color="Color.Primary"
             StartIcon="@Icons.Material.Filled.CloudUpload" for="@context">
-            Media Yükle
+            Medya Yükle
         </MudButton>
     </ButtonTemplate>
-</MudFileUpload>
-@if (files != null)
-{
-    <MudList>
-        @foreach (var file in files)
+    <SelectedTemplate>
+        @if (context != null)
         {
-            <MudListItem Icon="@Icons.Material.Filled.AttachFile">
-                @file.Name <code>@file.Size bytes</code>
-            </MudListItem>
+            <MudList>
+                @foreach (var file in context)
+                {
+                    <MudListItem Icon="@Icons.Material.Filled.AttachFile">
+                        @file.Name <code>@file.Size bytes</code>
+                    </MudListItem>
+                }
+            </MudList>
         }
+<<<<<<< HEAD
     </MudList>
 }
 <MudTextField Required RequiredError="Boş Bırakılamaz" T="String" Label="Ad" />
@@ -37,18 +40,24 @@
  <MudTextField Required T="String" RequiredError="Boş Bırakılamaz" Label="Yapılan Müdahaleler" Variant="Variant.Outlined"
      class="form-control mt-4" Lines="3">
  </MudTextField>
+=======
+    </SelectedTemplate>
+</MudFileUpload>
+
+<MudTextField T="String" Label="Ad" />
+<MudTextField T="String" Label="Soyad" />
+<MudSelect T="String" Label="Cinsiyet" Variant="Variant.Outlined" AnchorOrigin="Origin.BottomCenter">
+    <MudSelectItem T="String" Value="@("Erkek")" />
+    <MudSelectItem T="String" Value="@("Kadın")" />
+</MudSelect>
+<MudAutocomplete T="string" Variant="Variant.Outlined" Label="Risk Durumu" />
+<MudTextField T="String" Label="Hasta Durum Bilgisi" Variant="Variant.Outlined" class="form-control mt-4" Lines="3">
+</MudTextField>
+<MudTextField T="String" Label="Yapılan Müdahaleler" Variant="Variant.Outlined" class="form-control mt-4" Lines="3">
+</MudTextField>
+>>>>>>> ccc55ed21505786cfdf174a7601d3a93520319f6
 
  @code {
-
-    IList<IBrowserFile> files = new List<IBrowserFile>();
-    private void UploadFiles(IReadOnlyList<IBrowserFile> files)
-    {
-        foreach (var file in files)
-        {
-            this.files.Add(file);
-        }
-    }
-
 
 
 }
