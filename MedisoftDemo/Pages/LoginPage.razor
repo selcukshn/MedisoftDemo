@@ -1,0 +1,83 @@
+@page "/login"
+@layout VoidLayout
+
+<div class="d-flex justify-content-center align-items-center vh-100 bg-color-body">
+    <div class="card w-75 card-color-shadow h-75 b-rad">
+        <div class="row  h-100">
+            <div class="col-8 p-5 bg-color">
+                <div class="d-flex align-items-center justify-content-center">
+                    <MudAvatar Size="Size.Large" class="me-2">
+                        <MudImage Src="images/medisoftlogo.jpg"></MudImage>
+                    </MudAvatar>
+                    <h3 class="text-white ">Medisoft</h3>
+                </div>
+                <div class="d-flex justify-content-center mt-5">
+                    <img style="width: 600px;" src="images/portakilmacbook.png" alt="">
+                </div>
+                <h2 class="mt-5 text-white fw-light ">Hoşgeldiniz!</h2>
+            </div>
+            <div class="col-4 text-center p-20">
+                <h3 class="mb-5 text-color">Giriş Yap</h3>
+                @if (!string.IsNullOrEmpty(Error))
+                {
+                    <p class="text-danger">@Error</p>
+                }
+                <MudGrid Justify="Justify.Center">
+                    <MudItem xs="12" sm="7">
+                        <MudPaper style="background-color: #EEEEEE; border: none; box-shadow: none;" Class="pa-4">
+                            <MudForm @ref="form">
+                                <MudTextField T="string" Label="Kullanıcı Adı" Required="true"
+                                    RequiredError="Kullanıcı Adı alanı boş bırakılamaz"
+                                @bind-Value="LoginModel.Username" />
+                                <MudTextField T="string" Label="Şifre" @ref="pwField1" InputType="InputType.Password"
+                                    Required="true" RequiredError="Şifre Alanı boş bırakılamaz"
+                                @bind-Value="LoginModel.Password" />
+                            </MudForm>
+                        </MudPaper>
+                    </MudItem>
+                </MudGrid>
+                <div class="mb-4 d-flex justify-content-center">
+                    <button style="border-radius: 7px;padding:8px;" class="btn bg-color text-white"
+                    @onclick="TryLogin">Giriş
+                        Yap</button>
+                    <div class="form-check d-flex ms-2 align-items-center">
+                        <input class="form-check-input" type="checkbox" value="" id="flexCheckIndeterminate">
+                        <label class="form-check-label ms-1 text-center" for="flexCheckIndeterminate">
+                            Şifremi hatırla
+                        </label>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+</div>
+
+@code {
+    MudTextField<string> pwField1;
+    MudForm form;
+
+    [Inject] IAuthRequestService authService { get; set; }
+    [Inject] NavigationManager navManager { get; set; }
+    [Inject] ILocalStorageService storage { get; set; }
+    UserLoginModel LoginModel = new UserLoginModel();
+    string Error = string.Empty;
+
+    public async Task TryLogin()
+    {
+        var response = await authService.LoginAsync(LoginModel);
+        if (response is not null)
+        {
+            if (response.UserRoleId == 1)
+                navManager.NavigateTo("/technician");
+            else if (response.UserRoleId == 2)
+                navManager.NavigateTo("/central");
+        }
+        else
+            Error = "Kullanıcı adı veya şifre hatalı";
+    }
+}
+
+
+

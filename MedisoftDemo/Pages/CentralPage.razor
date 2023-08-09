@@ -1,0 +1,172 @@
+@page "/central"
+<div class="h100" style="background-color: #f8f7f7;">
+    <div class="container">
+        <div class="row h100 pt-30">
+            <div class="col-4">
+                <div class="row">
+                    <div class="col-12">
+                        <div class=" w-100">
+                            <MudCard style="background-color: #EEEEEE;" class="w-100">
+                                <div class="d-flex justify-content-center pt-5">
+                                    <h6>Santral Bilgi Giriş</h6>
+                                </div>
+                                <MudCardContent>
+                                    <MudTextField T="string" Label="Vaka bildirimi yapan adı"
+                                    @bind-Value="_case.PatientName" />
+                                    <MudTextField T="string" Label="Vaka bildirimi yapan soyadı"
+                                    @bind-Value="_case.PatientLastName" Class="mt-3" />
+                                    <MudTextField T="string" Label="Vaka bildirimi yapan adı telefon no"
+                                    @bind-Value="_case.PhoneNumber" Class="mt-3" InputType="InputType.Number" />
+                                    <h6 class="mb-0 mt-5 text-center">Vaka Bilgileri</h6>
+                                    <MudAutocomplete T="string" Label="Vaka Türü" SearchFunc="@Search6"
+                                    @bind-Value="_case.CaseType" />
+                                    <MudTextField T="string" Label="Vaka Açıklama" Variant="Variant.Outlined"
+                                        class="form-control mt-4 bg-transparent" Lines="3"
+                                    @bind-Value="_case.ComplaintDefinition"></MudTextField>
+                                    <MudTextField T="int" InputType="InputType.Number" Label="Hasta Sayısı"
+                                    @bind-Value="_case.PatientNumber" />
+                                    <MudAutocomplete T="string" Label="Şehir" SearchFunc="@Search1"
+                                    @bind-Value="_case.City" />
+                                    <MudAutocomplete T="string" Label="İlçe" SearchFunc="@Search2"
+                                    @bind-Value="_case.District" />
+                                    <MudAutocomplete T="string" Label="Mahalle" SearchFunc="@Search3"
+                                    @bind-Value="_case.Neighhbour" />
+                                    <MudAutocomplete T="string" Label="Sokak" SearchFunc="@Search4"
+                                    @bind-Value="_case.Street" />
+                                    <MudTextField T="string" Label="Açık adres" Variant="Variant.Outlined"
+                                        class="form-control mt-4 bg-transparent" Lines="3" @bind-Value="_case.Address">
+                                    </MudTextField>
+                                    <h6 class="mb-0 mt-5 text-center">Ambulans Bilgileri</h6>
+                                    <MudAutocomplete T="string" Label="Ambulans" SearchFunc="@Search5"
+                                    @bind-Value="_case.SelectedAmbulance" />
+                                    <MudButton class="mt-5 w-100" Color="Color.Tertiary" Variant="Variant.Filled"
+                                    @onclick="AddCase">Bildir
+                                    </MudButton>
+                                </MudCardContent>
+                            </MudCard>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-8">
+                <MudDataGrid T="Case" ReadOnly="false" EditTrigger="@DataGridEditTrigger.Manual"
+                    EditMode="@DataGridEditMode.Form" Items="@cases">
+                    <Columns>
+                        <PropertyColumn Property="x => x.PatientName" Title="İsim" />
+                        <PropertyColumn Property="x => x.PatientLastName" Title="Soyisim" />
+                        <PropertyColumn Property="x => x.Address" Title="Address" />
+                        <PropertyColumn Property="x => x.PhoneNumber" Title="Telefon Numarası" />
+                        <TemplateColumn CellClass="d-flex justify-end">
+                            <CellTemplate>
+                                <MudIconButton Size="@Size.Small" Icon="@Icons.Material.Outlined.Edit"
+                                    OnClick="@context.Actions.StartEditingItemAsync" />
+                            </CellTemplate>
+                        </TemplateColumn>
+                    </Columns>
+                </MudDataGrid>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@code {
+    public Case _case = new Case();
+    public List<string> ambulances = new(){
+"ambulans1","ambulans2","ambulans3"
+};
+
+    public List<string> cities = new(){
+"adana","maras","anteb"
+};
+
+    public List<string> districts = new(){
+"ilce1","ilce2","ilce3"
+};
+
+    public List<string> neighs = new(){
+"mahalle1","mahalle2","mahalle3"
+};
+
+    public List<string> streets = new(){
+"sokak1","sokak2","sokak3"
+};
+
+    public List<string> caseinfs = new(){
+"vaka1","vaka2","vaka3"
+};
+
+
+    public List<Case> cases = new List<Case>();
+
+    public void AddCase()
+    {
+        cases.Add((Case)_case.Clone());
+    }
+
+    private async Task<IEnumerable<string>> Search6(string value)
+    {
+        // In real life use an asynchronous function for fetching data from an api.
+        await Task.Delay(5);
+
+        // if text is null or empty, show complete list
+        if (string.IsNullOrEmpty(value))
+            return caseinfs;
+        return caseinfs.Where(x => x.Contains(value, StringComparison.InvariantCultureIgnoreCase));
+    }
+
+
+
+    private async Task<IEnumerable<string>> Search1(string value)
+    {
+        // In real life use an asynchronous function for fetching data from an api.
+        await Task.Delay(5);
+
+        // if text is null or empty, show complete list
+        if (string.IsNullOrEmpty(value))
+            return cities;
+        return cities.Where(x => x.Contains(value, StringComparison.InvariantCultureIgnoreCase));
+    }
+    private async Task<IEnumerable<string>> Search2(string value)
+    {
+        // In real life use an asynchronous function for fetching data from an api.
+        await Task.Delay(5);
+
+        // if text is null or empty, show complete list
+        if (string.IsNullOrEmpty(value))
+            return districts;
+        return districts.Where(x => x.Contains(value, StringComparison.InvariantCultureIgnoreCase));
+    }
+    private async Task<IEnumerable<string>> Search3(string value)
+    {
+        // In real life use an asynchronous function for fetching data from an api.
+        await Task.Delay(5);
+
+        // if text is null or empty, show complete list
+        if (string.IsNullOrEmpty(value))
+            return neighs;
+        return neighs.Where(x => x.Contains(value, StringComparison.InvariantCultureIgnoreCase));
+    }
+    private async Task<IEnumerable<string>> Search4(string value)
+    {
+        // In real life use an asynchronous function for fetching data from an api.
+        await Task.Delay(5);
+
+        // if text is null or empty, show complete list
+        if (string.IsNullOrEmpty(value))
+            return streets;
+        return streets.Where(x => x.Contains(value, StringComparison.InvariantCultureIgnoreCase));
+    }
+    private async Task<IEnumerable<string>> Search5(string value)
+    {
+        // In real life use an asynchronous function for fetching data from an api.
+        await Task.Delay(5);
+
+        // if text is null or empty, show complete list
+        if (string.IsNullOrEmpty(value))
+            return ambulances;
+        return ambulances.Where(x => x.Contains(value, StringComparison.InvariantCultureIgnoreCase));
+    }
+
+
+}

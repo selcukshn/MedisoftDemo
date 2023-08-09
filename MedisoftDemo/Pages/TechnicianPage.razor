@@ -1,0 +1,72 @@
+@page "/technician"
+
+
+<div class="h100" style="background-color: #f8f7f7;">
+    <div class="container pt-30">
+        <MudDataGrid T="Case" ReadOnly="false" EditTrigger="@DataGridEditTrigger.Manual"
+            EditMode="@DataGridEditMode.Form" Items="@Case.cases">
+            <Columns>
+                <PropertyColumn IsEditable="false" Property="x => x.time" Title="Vaka Tarihi" />
+                <PropertyColumn IsEditable="false" Property="x => x.CaseType" Title="Vaka Türü" />
+                <PropertyColumn IsEditable="false" Property="x => x.City" Title="Şehir" />
+                <PropertyColumn IsEditable="false" Property="x => x.District" Title="İlçe" />
+                <PropertyColumn IsEditable="false" Property="x => x.Neighhbour" Title="Mahalle" />
+                <PropertyColumn IsEditable="false" Property="x => x.Street" Title="Sokak" />
+
+                <PropertyColumn Hidden IsEditable="false" Property="x => x.PatientName" Title="Ad" />
+                 <PropertyColumn Hidden IsEditable="false" Property="x => x.PatientLastName" Title="Soyad" />
+                 <PropertyColumn Hidden Property="x => x.Gender" Title="Cinsiyet" />
+                 <PropertyColumn Hidden Property="x => x.RiskSituation" Title="Risk Durumu">
+                     <EditTemplate>
+                         <MudAutocomplete T="string" Variant="Variant.Filled" Label="Risk Durumu" SearchFunc="@Search" />
+                     </EditTemplate>
+                 </PropertyColumn>
+                 <PropertyColumn Hidden Property="x => x.PatientInformation" Title="Hasta Bilgisi">
+                     <EditTemplate>
+                         <MudTextField Label="Hasta Durum Bilgisi" Variant="Variant.Outlined"
+                         @bind-Value="context.Item.PatientInformation" class="form-control mt-4" Lines="3">
+                         </MudTextField>
+                     </EditTemplate>
+                 </PropertyColumn>
+                 <PropertyColumn Hidden Property="x => x.FirstAid" Title="İlkyardım">
+                     <EditTemplate>
+                         <MudTextField Label="Yapılan Müdahaleler" Variant="Variant.Outlined"
+                         @bind-Value="context.Item.FirstAid" class="form-control mt-4" Lines="3"></MudTextField>
+                     </EditTemplate>
+                 </PropertyColumn>
+                 <TemplateColumn CellClass="d-flex justify-end">
+                     <CellTemplate>
+                         <MudIconButton Size="@Size.Small" Icon="@Icons.Material.Outlined.Edit"
+                             OnClick="@(()=>OpenDialog(context.Item))" />
+                     </CellTemplate>
+                 </TemplateColumn>
+             </Columns>
+         </MudDataGrid>
+     </div>
+ </div>
+
+
+ @code {
+
+    [Inject] public IDialogService DialogService { get; set; }
+
+    public List<string> caseinfs = new() { "vaka1", "vaka2", "vaka3" };
+
+    private async Task<IEnumerable<string>> Search(string value)
+    {
+        // In real life use an asynchronous function for fetching data from an api.
+        await Task.Delay(5);
+
+        // if text is null or empty, show complete list
+        if (string.IsNullOrEmpty(value))
+            return caseinfs;
+        return caseinfs.Where(x => x.Contains(value, StringComparison.InvariantCultureIgnoreCase));
+    }
+
+    private void OpenDialog(Case _case)
+    {
+        var options = new DialogOptions { CloseOnEscapeKey = true };
+        DialogService.Show<PatientDialog>("Simple Dialog", new DialogParameters<PatientDialog>() { { x => x._case, _case } }, options);
+    }
+
+}

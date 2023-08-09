@@ -1,0 +1,12 @@
+﻿@inherits LayoutComponentBase
+
+<MudThemeProvider />
+<MudDialogProvider FullWidth="true" MaxWidth="MaxWidth.Medium" />
+<MudSnackbarProvider />
+
+<MudLayout>
+    <MudMainContent class="p-0">
+        <MedisoftDemo.Components.HeaderComponent></MedisoftDemo.Components.HeaderComponent>
+        @Body
+    </MudMainContent>
+</MudLayout>
